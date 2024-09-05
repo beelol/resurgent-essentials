@@ -27,7 +27,7 @@ public class ServerMOTDConfig {
     private static void loadServerConfig() {
         serverConfig.load();
 
-        motd = serverConfig.getString("motd", Configuration.CATEGORY_GENERAL, "Welcome to the server!", "Message of the Day displayed to players upon joining.");
+        motd = serverConfig.getString("motd", Configuration.CATEGORY_GENERAL, "{\"text\":\"Welcome to the server!\",\"color\":\"white\"}", "Message of the Day displayed to players upon joining.");
 
         randomSpawnEnabled = serverConfig.getBoolean("randomSpawnEnabled", Configuration.CATEGORY_GENERAL, false, "Enable random spawn on first join and death.");
 
