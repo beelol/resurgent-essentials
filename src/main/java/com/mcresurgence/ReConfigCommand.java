@@ -15,7 +15,7 @@ public class ReConfigCommand extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/reconfig <randomSpawnEnabled|spawnRadius> <value>";
+        return "/reconfig <randomSpawnEnabled|spawnRadius|maxThornsDamage|enableThornsDamageCap> <value>";
     }
 
     @Override
@@ -39,6 +39,16 @@ public class ReConfigCommand extends CommandBase {
                     int radius = Integer.parseInt(value);
                     ServerMOTDConfig.setSpawnRadius(radius);
                     sender.sendMessage(new TextComponentString("Spawn radius set to: " + radius));
+                    break;
+                case "maxThornsDamage":
+                    float maxThornsDamage = Float.parseFloat(value);
+                    ServerMOTDConfig.setMaxThornsDamage(maxThornsDamage);
+                    sender.sendMessage(new TextComponentString("Max Thorns damage set to: " + maxThornsDamage));
+                    break;
+                case "enableThornsDamageCap":
+                    boolean enableThornsDamageCap = Boolean.parseBoolean(value);
+                    ServerMOTDConfig.setEnableThornsDamageCap(enableThornsDamageCap);
+                    sender.sendMessage(new TextComponentString("Enable Thorns damage cap set to: " + enableThornsDamageCap));
                     break;
                 default:
                     sender.sendMessage(new TextComponentString("Unknown config option: " + option));
