@@ -21,11 +21,11 @@ public class ResurgentEssentialsMod {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new PlayerMOTDSender());
         MinecraftForge.EVENT_BUS.register(new PlayerRandomSpawnHandler());
+        MinecraftForge.EVENT_BUS.register(new ThornsDamageHandler()); // Register ThornsDamageHandler
     }
 
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        // Register the reconfig command
         event.registerServerCommand(new ReConfigCommand());
     }
 }

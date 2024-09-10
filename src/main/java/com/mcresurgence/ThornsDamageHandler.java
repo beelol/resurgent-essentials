@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ThornsDamageHandler {
     @SubscribeEvent
-    public static void onLivingHurt(LivingHurtEvent event) {
+    public void onLivingHurt(LivingHurtEvent event) {
         // Check if the damage source is Thorns
         if (event.getSource().damageType.equals("thorns")) {
             // Apply damage cap only if enabled in the config
