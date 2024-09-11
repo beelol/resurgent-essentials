@@ -14,7 +14,7 @@ public class PlayerMOTDSender {
             EntityPlayerMP playerMP = (EntityPlayerMP) event.player;
             MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 
-            String motd = ServerMOTDConfig.getMotd();
+            String motd = ResurgentEssentialsConfig.getMotd();
             server.getCommandManager().executeCommand(server, String.format("tellraw %s %s", playerMP.getName(), motd));
         }
     }

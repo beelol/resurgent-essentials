@@ -15,7 +15,7 @@ public class ReConfigCommand extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "/reconfig <randomSpawnEnabled|spawnRadius|maxThornsDamage|enableThornsDamageCap> <value>";
+        return "/reconfig <randomSpawnEnabled|spawnRadius|maxThornsDamage|enableThornsDamageCap|maxSharpnessDamage|enableSharpnessDamageCap|maxProtectionReduction|enableProtectionReductionCap> <value>";
     }
 
     @Override
@@ -32,23 +32,43 @@ public class ReConfigCommand extends CommandBase {
             switch (option) {
                 case "randomSpawnEnabled":
                     boolean enabled = Boolean.parseBoolean(value);
-                    ServerMOTDConfig.setRandomSpawnEnabled(enabled);
+                    ResurgentEssentialsConfig.setRandomSpawnEnabled(enabled);
                     sender.sendMessage(new TextComponentString("Random spawn enabled set to: " + enabled));
                     break;
                 case "spawnRadius":
                     int radius = Integer.parseInt(value);
-                    ServerMOTDConfig.setSpawnRadius(radius);
+                    ResurgentEssentialsConfig.setSpawnRadius(radius);
                     sender.sendMessage(new TextComponentString("Spawn radius set to: " + radius));
                     break;
                 case "maxThornsDamage":
                     float maxThornsDamage = Float.parseFloat(value);
-                    ServerMOTDConfig.setMaxThornsDamage(maxThornsDamage);
+                    ResurgentEssentialsConfig.setMaxThornsDamage(maxThornsDamage);
                     sender.sendMessage(new TextComponentString("Max Thorns damage set to: " + maxThornsDamage));
                     break;
                 case "enableThornsDamageCap":
                     boolean enableThornsDamageCap = Boolean.parseBoolean(value);
-                    ServerMOTDConfig.setEnableThornsDamageCap(enableThornsDamageCap);
+                    ResurgentEssentialsConfig.setEnableThornsDamageCap(enableThornsDamageCap);
                     sender.sendMessage(new TextComponentString("Enable Thorns damage cap set to: " + enableThornsDamageCap));
+                    break;
+                case "maxSharpnessDamage":
+                    float maxSharpnessDamage = Float.parseFloat(value);
+                    ResurgentEssentialsConfig.setMaxSharpnessDamage(maxSharpnessDamage);
+                    sender.sendMessage(new TextComponentString("Max Sharpness damage set to: " + maxSharpnessDamage));
+                    break;
+                case "enableSharpnessDamageCap":
+                    boolean enableSharpnessDamageCap = Boolean.parseBoolean(value);
+                    ResurgentEssentialsConfig.setEnableSharpnessDamageCap(enableSharpnessDamageCap);
+                    sender.sendMessage(new TextComponentString("Enable Sharpness damage cap set to: " + enableSharpnessDamageCap));
+                    break;
+                case "maxProtectionReduction":
+                    float maxProtectionReduction = Float.parseFloat(value);
+                    ResurgentEssentialsConfig.setMaxProtectionReduction(maxProtectionReduction);
+                    sender.sendMessage(new TextComponentString("Max Protection reduction set to: " + maxProtectionReduction));
+                    break;
+                case "enableProtectionReductionCap":
+                    boolean enableProtectionReductionCap = Boolean.parseBoolean(value);
+                    ResurgentEssentialsConfig.setEnableProtectionReductionCap(enableProtectionReductionCap);
+                    sender.sendMessage(new TextComponentString("Enable Protection reduction cap set to: " + enableProtectionReductionCap));
                     break;
                 default:
                     sender.sendMessage(new TextComponentString("Unknown config option: " + option));

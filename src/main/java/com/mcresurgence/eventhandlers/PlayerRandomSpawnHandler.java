@@ -1,12 +1,12 @@
-package com.mcresurgence;
+package com.mcresurgence.eventhandlers;
 
+import com.mcresurgence.ResurgentEssentialsConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -16,7 +16,7 @@ import java.util.Random;
 public class PlayerRandomSpawnHandler {
 
     private boolean isRandomSpawnAllowed(EntityPlayerMP player) {
-        return ServerMOTDConfig.isRandomSpawnEnabled() && !hasValidBedSpawn(player);
+        return ResurgentEssentialsConfig.isRandomSpawnEnabled() && !hasValidBedSpawn(player);
     }
 
     @SubscribeEvent
@@ -29,7 +29,7 @@ public class PlayerRandomSpawnHandler {
         // Check if this is the player's first join
         if (!persistentData.getBoolean("HasSpawned")) {
             if (isRandomSpawnAllowed(playerMP)) {
-                BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), playerMP.getPosition(), ServerMOTDConfig.getSpawnRadius());
+                BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), playerMP.getPosition(), ResurgentEssentialsConfig.getSpawnRadius());
 
                 // Immediately update the player's position
                 playerMP.setPositionAndUpdate(randomSpawnPoint.getX(), randomSpawnPoint.getY(), randomSpawnPoint.getZ());
@@ -55,7 +55,7 @@ public class PlayerRandomSpawnHandler {
         FMLLog.info("[Resurgent Essentials] Player '%s' has respawned.", playerMP.getName());
 
         if (isRandomSpawnAllowed(playerMP)) {
-            BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), playerMP.getPosition(), ServerMOTDConfig.getSpawnRadius());
+            BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), playerMP.getPosition(), ResurgentEssentialsConfig.getSpawnRadius());
 
             // Schedule the teleport to ensure it happens after Minecraft has finished its default spawn handling
             playerMP.getServerWorld().getMinecraftServer().addScheduledTask(() -> {
