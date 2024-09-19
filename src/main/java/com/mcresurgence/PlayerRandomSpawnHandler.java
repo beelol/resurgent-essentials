@@ -29,17 +29,22 @@ public class PlayerRandomSpawnHandler {
         // Check if this is the player's first join
         if (!persistentData.getBoolean("HasSpawned")) {
             if (isRandomSpawnAllowed(playerMP)) {
-                BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), playerMP.getPosition(), ServerMOTDConfig.getSpawnRadius());
+                World world = playerMP.getEntityWorld();
+                int radius = ServerMOTDConfig.getSpawnRadius();
+
+                BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), world.getSpawnPoint(), radius);
 
                 // Immediately update the player's position
                 playerMP.setPositionAndUpdate(randomSpawnPoint.getX(), randomSpawnPoint.getY(), randomSpawnPoint.getZ());
+
+
+                FMLLog.info("[Resurgent Essentials] Player '%s' has joined for the first time and is being teleported to a random location. Center position based on World Spawn Point is (%d, %d, %d), spawning player within %d block radius.", playerMP.getName(), world.getSpawnPoint().getX(), world.getSpawnPoint().getY(), world.getSpawnPoint().getZ(), radius);
             }
 
             // Mark that the player has spawned for the first time
             persistentData.setBoolean("HasSpawned", true);
             playerMP.getEntityData().setTag(EntityPlayer.PERSISTED_NBT_TAG, persistentData);
 
-            FMLLog.info("[Resurgent Essentials] Player '%s' has joined for the first time and is being teleported to a random location.", playerMP.getName());
         } else {
             FMLLog.info("[Resurgent Essentials] Player '%s' is rejoining; no random teleportation.", playerMP.getName());
         }
@@ -55,12 +60,15 @@ public class PlayerRandomSpawnHandler {
         FMLLog.info("[Resurgent Essentials] Player '%s' has respawned.", playerMP.getName());
 
         if (isRandomSpawnAllowed(playerMP)) {
-            BlockPos randomSpawnPoint = getRandomSpawnPoint(playerMP.getEntityWorld(), playerMP.getPosition(), ServerMOTDConfig.getSpawnRadius());
+            World world = playerMP.getEntityWorld();
+            int radius = ServerMOTDConfig.getSpawnRadius();
+
+            BlockPos randomSpawnPoint = getRandomSpawnPoint(world, playerMP.getPosition(), radius);
 
             // Schedule the teleport to ensure it happens after Minecraft has finished its default spawn handling
             playerMP.getServerWorld().getMinecraftServer().addScheduledTask(() -> {
                 playerMP.setPositionAndUpdate(randomSpawnPoint.getX() + 0.5, randomSpawnPoint.getY(), randomSpawnPoint.getZ() + 0.5);
-                FMLLog.info("[Resurgent Essentials] Player '%s' successfully teleported to a random location at (%d, %d, %d).", playerMP.getName(), randomSpawnPoint.getX(), randomSpawnPoint.getY(), randomSpawnPoint.getZ());
+                FMLLog.info("[Resurgent Essentials] Player '%s' successfully teleported to a random location at (%d, %d, %d). Center position based on World Spawn Point is (%d, %d, %d), spawning player within %d block radius.", playerMP.getName(), randomSpawnPoint.getX(), randomSpawnPoint.getY(), randomSpawnPoint.getZ(), world.getSpawnPoint().getX(), world.getSpawnPoint().getY(), world.getSpawnPoint().getZ(), radius);
             });
         }
     }
